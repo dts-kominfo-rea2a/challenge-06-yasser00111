@@ -7,23 +7,68 @@ let file3 = "./data3.json";
 
 // ! JANGAN DIMODIFIKASI
 let modifyFile1 = (val) => {
-  file1 = val;
+    file1 = val;
 };
 let modifyFile2 = (val) => {
-  file2 = val;
+    file2 = val;
 };
 let modifyFile3 = (val) => {
-  file3 = val;
+    file3 = val;
 };
 
 // TODO: Kerjakan bacaData
-// gunakan variabel file1, file2, dan file3
-const bacaData = null;
+const bacaData = (fnCallBack) => {
+        let resultArray = []
+
+        fs.readFile(
+            file1, {
+                encoding: "utf8"
+            },
+            (err, data) => {
+                if (err) {
+                    return fnCallBack(err, null);
+                }
+
+                const dataResult = JSON.parse(data)
+                resultArray.push(dataResult.message.split(" ")[1])
+            }
+        )
+        fs.readFile(
+            file2, {
+                encoding: "utf8"
+            },
+            (err, data) => {
+                if (err) {
+                    return fnCallBack(err, null);
+                }
+
+                const dataResult = JSON.parse(data)
+                resultArray.push(dataResult[0].message.split(" ")[1])
+            }
+        )
+
+        fs.readFile(
+            file3, {
+                encoding: "utf8"
+            },
+            (err, data) => {
+                if (err) {
+                    return fnCallBack(err, null);
+                }
+
+                const dataResult = JSON.parse(data)
+                resultArray.push(dataResult[0].data.message.split(" ")[1])
+                fnCallBack(null, resultArray)
+            }
+        )
+    }
+    //     // gunakan variabel file1, file2, dan file3
+    // const bacaData = null;
 
 // ! JANGAN DIMODIFIKASI
 module.exports = {
-  modifyFile1,
-  modifyFile2,
-  modifyFile3,
-  bacaData,
+    modifyFile1,
+    modifyFile2,
+    modifyFile3,
+    bacaData,
 };
